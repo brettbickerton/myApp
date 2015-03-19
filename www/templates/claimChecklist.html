@@ -1,0 +1,10 @@
+<ion-view view-title="Claims Checklist">
+  <ion-content>
+    <ion-list>
+          <ion-checkbox ng-repeat="claim in claims"
+                        ng-model="claim.checked"
+                        ng-checked="claim.checked">
+              {{ claim.title}} - {{claim.note}}
+    </ion-list>
+  </ion-content>
+</ion-view>

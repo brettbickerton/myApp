@@ -42,27 +42,40 @@ angular.module('starter.controllers', [])
     //{ title: 'Cowbell', id: 6 }
   ];
 })
+    .controller('ClaimCtrl', function($scope) {
+        $scope.claims = [
+            { title: 'Insurance', id: 1, note: 'Does the patient have the appropriate insurance', checked: true },
+            { title: 'Vaccinations', id: 2, note: 'Are all of the mandatory vaccinations up to date',checked:false },
+            { title: 'Medic Alert', id: 3, note: 'Are the wearing a medic alert bracelet', checked:false }
+            //{ title: 'Indie', id: 4 },
+            //{ title: 'Rap', id: 5 },
+            //{ title: 'Cowbell', id: 6 }
+        ];
+    })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .controller('MapCtrl', function($scope, $ionicLoading) {
-      //google.maps.event.addDomListener(window, "load",function() {
-        var myLat = 43.544805;
-        var myLng = -80.248167;
-          var myLatlng = new google.maps.LatLng(myLat,myLng);
+        //function initialize() {
+            var myLat = 43.544805;
+            var myLng = -80.248167;
+            var myLatlng = new google.maps.LatLng(myLat, myLng);
 
-          var mapOptions = {
-              center: myLatlng,
-              zoom: 16,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          var map;
-          map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map;
+            var mapDiv = document.getElementById("map");
+            map = new google.maps.Map(mapDiv, mapOptions);
 
-          $scope.map = map;
-      //});
-      //  google.maps.event.addDomListener(map,"load",$scope.initialize());
+            $scope.map = map;
+            //google.maps.event.addDomListener(mapDiv, 'click', showAlert);
+        //}
+        //google.maps.event.addDomListener(window, 'load', initialize);
+
         $scope.centerOnMe = function() {
             if(!$scope.map) {
                 return;
@@ -74,8 +87,22 @@ angular.module('starter.controllers', [])
             });
 
             navigator.geolocation.getCurrentPosition(function(pos) {
-                $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                myLat=pos.coords.latitude;
+                myLng=pos.coords.longitude;
+                myLatlng=new google.maps.LatLng(myLat,myLng);
+
+                $scope.map.setCenter(myLatlng);
                 //$scope.loading.hide();
+                alert(pos.coords.latitude);
+                var marker = new google.maps.Marker({
+
+                    map:  $scope.map,
+
+                    position: myLatlng,
+                    title: 'Hello World!'
+
+                });
+                $ionicLoading.hide();
             }, function(error) {
                 alert('Unable to get location: ' + error.message);
             });

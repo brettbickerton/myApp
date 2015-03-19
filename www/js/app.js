@@ -48,6 +48,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+  .state('app.claims', {
+      url: "/claims",
+      views: {
+          'menuContent': {
+              templateUrl: "templates/claimChecklist.html",
+              controller: 'ClaimCtrl'
+          }
+      }
+  })
     .state('app.playlists', {
       url: "/playlists",
       views: {
@@ -67,7 +76,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-	
+
   .state('app.single', {
     url: "/playlists/:playlistId",
     views: {
